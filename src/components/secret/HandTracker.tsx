@@ -154,6 +154,7 @@ export default function HandTracker({ onHandUpdate, active }: HandTrackerProps) 
         let cleanup: (() => void) | null = null;
         let cancelled = false;
         let stream: MediaStream | null = null;
+        let animId: number;
 
         async function init() {
             try {
@@ -265,7 +266,6 @@ export default function HandTracker({ onHandUpdate, active }: HandTrackerProps) 
 
                 // Step 3: Frame processing loop
                 setStatus("🖐️ Hand tracking active!");
-                let animId: number;
 
                 // Throttle detection to ~10 FPS (100ms) to save CPU
                 let lastVideoTime = 0;
@@ -275,21 +275,26 @@ export default function HandTracker({ onHandUpdate, active }: HandTrackerProps) 
                     if (cancelled || !videoRef.current) return;
 
                     const now = Date.now();
+                    // Checking actual video time or timestamp is better, but clock time is fine for this
                     if (now - lastVideoTime >= THROTTLE_MS && videoRef.current.readyState >= 2) {
                         lastVideoTime = now;
                         try {
                             await hands.send({ image: videoRef.current });
                         } catch (e) {
-                            // Skip frame on error
+                            // ignore
                         }
                     }
-                    animId = requestAnimationFrame(processFrame);
+                    // Re-schedule
+                    if (!cancelled) {
+                        animId = requestAnimationFrame(processFrame);
+                    }
                 };
 
                 animId = requestAnimationFrame(processFrame);
 
                 cleanup = () => {
-                    cancelAnimationFrame(animId);
+                    cancelled = true;
+                    if (animId) cancelAnimationFrame(animId);
                     hands.close();
                 };
             } catch (err: any) {
@@ -305,6 +310,7 @@ export default function HandTracker({ onHandUpdate, active }: HandTrackerProps) 
             cancelled = true;
             if (cleanup) cleanup();
             if (stream) stream.getTracks().forEach((t) => t.stop());
+            if (animId) cancelAnimationFrame(animId);
         };
     }, [active]);
 
