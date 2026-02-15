@@ -72,8 +72,9 @@ export const QUIZ_QUESTIONS: QuizQuestionData[] = [
             { label: "D", value: "He already knows the answer" },
             { label: "F", value: "Write it yourself", hasEssay: true },
         ],
-        rejectPattern: /\bno\b/i,
-        rejectMessage: "Seriously? 🥺 Think again.",
+        // Match "no", "tidak", "gak", "nggak", "nope", "nay", "nein", "non", "lie" (typo of iie), "iie"
+        rejectPattern: /\b(no|nop|nope|nay|nah|tidak|gak|nggak|enggak|nein|non|iie|lie|never)\b/i,
+        rejectMessage: "Eits, tidak bisa menolak! 😋 Coba lagi ya cantikk.",
     },
     {
         id: 6,
@@ -103,5 +104,31 @@ export const QUIZ_QUESTIONS: QuizQuestionData[] = [
         id: 8,
         question: "If you could write down one dream you truly want to achieve, what would it be?",
         type: "essay",
+    },
+    {
+        id: 9,
+        question: "When you're upset with Abid, how do you prefer him to handle it?",
+        type: "multiple-choice",
+        options: [
+            { label: "A", value: "Give me space first" },
+            { label: "B", value: "Talk it out immediately" },
+            { label: "C", value: "Hug me first, talk later" },
+            { label: "D", value: "Send a long reassuring message" },
+            { label: "E", value: "Just say sorry sincerely" },
+            { label: "F", value: "Write your soft request", hasEssay: true },
+        ],
+    },
+    {
+        id: 10,
+        question: "What makes you feel secure in a relationship?",
+        type: "multiple-choice",
+        options: [
+            { label: "A", value: "Consistency" },
+            { label: "B", value: "Honest communication" },
+            { label: "C", value: "Loyalty" },
+            { label: "D", value: "Effort and attention" },
+            { label: "E", value: "Emotional support" },
+            { label: "F", value: "Write the secret ingredient", hasEssay: true },
+        ],
     },
 ];
