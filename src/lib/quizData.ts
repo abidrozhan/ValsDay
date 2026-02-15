@@ -74,7 +74,7 @@ export const QUIZ_QUESTIONS: QuizQuestionData[] = [
         ],
         // Match "no", "tidak", "gak", "nggak", "nope", "nay", "nein", "non", "lie" (typo of iie), "iie"
         rejectPattern: /\b(no|nop|nope|nay|nah|tidak|gak|nggak|enggak|nein|non|iie|lie|never)\b/i,
-        rejectMessage: "Eits, tidak bisa menolak! 😋 Coba lagi ya cantikk.",
+        rejectMessage: "Seriously? 🥺 Think again.",
     },
     {
         id: 6,
@@ -92,7 +92,7 @@ export const QUIZ_QUESTIONS: QuizQuestionData[] = [
             7: "Professionally annoying 🎓",
             8: "Expert level 🏆",
             9: "It's his talent 🌟",
-            10: "Maximum annoyance, maximum love 💖",
+            10: "Maximum annoyance, love 💖",
         },
     },
     {
